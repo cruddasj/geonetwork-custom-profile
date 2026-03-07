@@ -1,0 +1,10 @@
+dist
+target
+rebel.xml
+*.iml
+.project
+.classpath
+.settings
+.editorconfig
+src/main/plugin/iso19139.gemini23/schematron/*.xsl
+src/main/plugin/iso19139.gemini23/schematron/pom.xml
