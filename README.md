@@ -22,7 +22,7 @@ The compose stack includes Elasticsearch as the search dependency required by Ge
    - username: `admin`
    - password: `admin`
 3. Open **Admin console** → **Metadata & templates**.
-4. Confirm `iso19139.gemini23` appears in the schema/template list.
+4. Confirm `GEMINI 2.3` appears in the schema/template list.
 
 ## Automated verification with Playwright
 
