@@ -19,4 +19,7 @@ RUN set -eux; \
     mkdir -p "$(dirname "$schema_target")" "$locale_target"; \
     rm -rf "$schema_target"; \
     cp -a /tmp/iso19139.gemini23 "$schema_target"; \
-    cp /tmp/en-schema-iso19139.gemini23.json "$locale_target/en-schema-iso19139.gemini23.json"
+    cp /tmp/en-schema-iso19139.gemini23.json "$locale_target/en-schema-iso19139.gemini23.json"; \
+    chown -R jetty:jetty "$schema_target" "$locale_target/en-schema-iso19139.gemini23.json"
+
+USER jetty
