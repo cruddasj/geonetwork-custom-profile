@@ -8,3 +8,7 @@ rebel.xml
 .editorconfig
 src/main/plugin/iso19139.gemini23/schematron/*.xsl
 src/main/plugin/iso19139.gemini23/schematron/pom.xml
+
+node_modules/
+playwright-report/
+test-results/
