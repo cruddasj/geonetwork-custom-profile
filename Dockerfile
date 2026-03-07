@@ -16,15 +16,10 @@ RUN set -eux; \
     fi; \
     schema_target="$webapp_root/WEB-INF/data/config/schema_plugins/iso19139.gemini23"; \
     locale_target="$webapp_root/WEB-INF/classes/META-INF/catalog/locales"; \
-    lib_dir="$webapp_root/WEB-INF/lib"; \
     mkdir -p "$(dirname "$schema_target")" "$locale_target"; \
     rm -rf "$schema_target"; \
     cp -a /tmp/iso19139.gemini23 "$schema_target"; \
     cp /tmp/en-schema-iso19139.gemini23.json "$locale_target/en-schema-iso19139.gemini23.json"; \
-    if ls "$lib_dir"/groovy-[0-9]*.jar >/dev/null 2>&1 \
-      && ls "$lib_dir"/groovy-all-*.jar >/dev/null 2>&1; then \
-      rm -f "$lib_dir"/groovy-all-*.jar; \
-    fi; \
     chown -R jetty:jetty "$schema_target" "$locale_target/en-schema-iso19139.gemini23.json"
 
 USER jetty
