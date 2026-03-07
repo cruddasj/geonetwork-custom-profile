@@ -1,0 +1,39 @@
+services:
+  elasticsearch:
+    image: elasticsearch:7.17.15
+    container_name: geonetwork-es
+    environment:
+      discovery.type: single-node
+      ES_JAVA_OPTS: -Xms512m -Xmx512m
+      xpack.security.enabled: "false"
+    ports:
+      - "9200:9200"
+    volumes:
+      - esdata:/usr/share/elasticsearch/data
+    healthcheck:
+      test: ["CMD-SHELL", "curl -fsS http://localhost:9200/_cluster/health >/dev/null || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 20
+    restart: unless-stopped
+
+  geonetwork:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: geonetwork-gemini23:4.2
+    container_name: geonetwork-gemini23
+    depends_on:
+      elasticsearch:
+        condition: service_healthy
+    environment:
+      ES_HOST: elasticsearch
+      ES_PROTOCOL: http
+      ES_PORT: 9200
+      WEBAPP_CONTEXT_PATH: /geonetwork
+    ports:
+      - "8080:8080"
+    restart: unless-stopped
+
+volumes:
+  esdata:

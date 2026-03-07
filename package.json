@@ -1,0 +1,14 @@
+{
+  "name": "geonetwork-custom-profile",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Playwright E2E checks for GeoNetwork 4.2 + GEMINI 2.3 Docker image",
+  "scripts": {
+    "test:e2e": "playwright test",
+    "test:e2e:headed": "playwright test --headed",
+    "test:e2e:install": "playwright install --with-deps chromium"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.55.0"
+  }
+}
