@@ -6,6 +6,9 @@ services:
       discovery.type: single-node
       xpack.security.enabled: "false"
       ES_JAVA_OPTS: -Xms512m -Xmx512m
+    ports:
+      - "9200:9200"
+      - "9300:9300"
     ulimits:
       memlock:
         soft: -1
@@ -27,17 +30,21 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    image: geonetwork-gemini23:4.2
     depends_on:
       elasticsearch:
         condition: service_healthy
     ports:
       - "8080:8080"
+    volumes:
+      - geonetwork:/catalogue-data
     environment:
       WEBAPP_CONTEXT_PATH: /geonetwork
       ES_HOST: elasticsearch
       ES_PORT: 9200
       ES_PROTOCOL: http
+      GEONETWORK_ES_HOST: elasticsearch
+      GEONETWORK_ES_PORT: 9200
+      GEONETWORK_ES_PROTOCOL: http
       JAVA_OPTS: -Xms512m -Xmx1024m -Dorg.eclipse.jetty.annotations.AnnotationParser.LEVEL=ERROR
     healthcheck:
       test: ["CMD-SHELL", "curl -fsS http://localhost:8080/geonetwork/srv/api/site || exit 1"]
@@ -47,3 +54,4 @@ services:
 
 volumes:
   esdata:
+  geonetwork:
