@@ -12,10 +12,11 @@ services:
     volumes:
       - esdata:/usr/share/elasticsearch/data
     healthcheck:
-      test: ["CMD-SHELL", "curl -fsS http://localhost:9200/_cluster/health || exit 1"]
-      interval: 15s
+      test: ['CMD-SHELL', 'curl -fsS "http://localhost:9200/_cluster/health?wait_for_status=yellow&timeout=1s" || exit 1']
+      interval: 10s
       timeout: 5s
-      retries: 20
+      retries: 30
+      start_period: 30s
 
   geonetwork:
     build:
