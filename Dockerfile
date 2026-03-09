@@ -44,30 +44,8 @@ FROM geonetwork:4.2
 
 USER root
 
-COPY --from=plugin-builder /build/target/schema-iso19139.gemini23-4.2.4-SNAPSHOT.jar /tmp/schema-iso19139.gemini23-4.2.4-SNAPSHOT.jar
-COPY src/main/plugin/iso19139.gemini23 /tmp/iso19139.gemini23
-COPY src/main/config/translations/en-schema-iso19139.gemini23.json /tmp/en-schema-iso19139.gemini23.json
-
-RUN set -eux; \
-    if [ -d /var/lib/jetty/webapps/geonetwork ]; then \
-      webapp_root=/var/lib/jetty/webapps/geonetwork; \
-    elif [ -d /usr/local/tomcat/webapps/geonetwork ]; then \
-      webapp_root=/usr/local/tomcat/webapps/geonetwork; \
-    else \
-      echo "GeoNetwork webapp path not found" >&2; \
-      exit 1; \
-    fi; \
-    schema_target="$webapp_root/WEB-INF/data/config/schema_plugins/iso19139.gemini23"; \
-    locale_target="$webapp_root/WEB-INF/classes/META-INF/catalog/locales"; \
-    lib_target="$webapp_root/WEB-INF/lib"; \
-    mkdir -p "$(dirname "$schema_target")" "$locale_target" "$lib_target"; \
-    rm -rf "$schema_target"; \
-    cp -a /tmp/iso19139.gemini23 "$schema_target"; \
-    cp /tmp/en-schema-iso19139.gemini23.json "$locale_target/en-schema-iso19139.gemini23.json"; \
-    cp /tmp/schema-iso19139.gemini23-4.2.4-SNAPSHOT.jar "$lib_target/"; \
-    if [ -f "$lib_target/groovy-2.5.5.jar" ] && [ -f "$lib_target/groovy-all-2.4.21.jar" ]; then \
-      rm -f "$lib_target/groovy-all-2.4.21.jar"; \
-    fi; \
-    chown -R jetty:jetty "$schema_target" "$locale_target/en-schema-iso19139.gemini23.json" "$lib_target/schema-iso19139.gemini23-4.2.4-SNAPSHOT.jar"
+COPY --chown=jetty:jetty --from=plugin-builder /build/target/schema-iso19139.gemini23-4.2.4-SNAPSHOT.jar /var/lib/jetty/webapps/geonetwork/WEB-INF/lib/schema-iso19139.gemini23-4.2.4-SNAPSHOT.jar
+COPY --chown=jetty:jetty src/main/plugin/iso19139.gemini23 /var/lib/jetty/webapps/geonetwork/WEB-INF/data/config/schema_plugins/iso19139.gemini23
+COPY --chown=jetty:jetty src/main/config/translations/en-schema-iso19139.gemini23.json /var/lib/jetty/webapps/geonetwork/WEB-INF/classes/META-INF/catalog/locales/en-schema-iso19139.gemini23.json
 
 USER jetty
