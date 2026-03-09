@@ -29,7 +29,7 @@
   <id>c9054754-5692-4189-9ac2-e95cf404a470</id>
   <version>1.0</version>
   <appMinorVersionSupported>3.4.0</appMinorVersionSupported>
-  <title xml:lang="en">GEMINI 2.3 &#45;&#45; Metadata</title>
+  <title xml:lang="en">GEP DEFRA &#45;&#45; Metadata</title>
   <description xml:lang="en">GEMINI 2.3 metadata profile based on ISO 19139:2007</description>
   <standardUrl xml:lang="en">https://agiorguk.github.io/gemini/1062-gemini-datasets-and-data-series.html</standardUrl>
   <depends>iso19139</depends>
