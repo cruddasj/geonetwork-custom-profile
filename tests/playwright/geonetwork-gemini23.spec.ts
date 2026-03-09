@@ -21,4 +21,7 @@ test('admin can see GEMINI 2.3 schema label in Metadata & templates', async ({ p
   }
 
   await expect(page.getByText('GEMINI 2.3', { exact: false })).toBeVisible({ timeout: 60_000 });
+  await expect(
+    page.getByText('UK GEMINI 2.3 metadata profile based on ISO 19139:2007', { exact: false })
+  ).toBeVisible({ timeout: 60_000 });
 });

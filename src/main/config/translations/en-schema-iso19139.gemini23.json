@@ -3,5 +3,6 @@
   "schemas.iso19139.gemini23": "GEMINI 2.3",
   "schema.iso19139.gemini23": "GEMINI 2.3",
   "metadataType.iso19139.gemini23": "GEMINI 2.3",
-  "metadataType-iso19139.gemini23": "GEMINI 2.3"
+  "metadataType-iso19139.gemini23": "GEMINI 2.3",
+  "schemas.iso19139.gemini23.description": "UK GEMINI 2.3 metadata profile based on ISO 19139:2007 for datasets, series, and services."
 }
