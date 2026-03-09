@@ -4,7 +4,7 @@ services:
     environment:
       discovery.type: single-node
       xpack.security.enabled: "false"
-      ES_JAVA_OPTS: -Xms1g -Xmx1g
+      ES_JAVA_OPTS: -Xms512m -Xmx512m
     ulimits:
       memlock:
         soft: -1
@@ -19,6 +19,7 @@ services:
       start_period: 30s
 
   geonetwork:
+    restart: unless-stopped
     build:
       context: .
       dockerfile: Dockerfile
@@ -32,7 +33,8 @@ services:
       ES_HOST: elasticsearch
       ES_PORT: 9200
       ES_PROTOCOL: http
-      JAVA_OPTS: -Xms1g -Xmx2g
+      ES_URL: http://elasticsearch:9200
+      JAVA_OPTS: -Xms512m -Xmx1024m
     healthcheck:
       test: ["CMD-SHELL", "curl -fsS http://localhost:8080/geonetwork/srv/api/site || exit 1"]
       interval: 20s

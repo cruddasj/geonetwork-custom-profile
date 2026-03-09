@@ -15,6 +15,19 @@ Services:
 
 The compose stack includes Elasticsearch as the search dependency required by GeoNetwork.
 
+## Export the built plugin JAR to your local directory
+
+The Dockerfile now exposes a dedicated build stage (`plugin-jar-export`) so you can write the built plugin JAR directly to the directory where you run the build:
+
+```bash
+docker build --target plugin-jar-export --output type=local,dest=. .
+```
+
+This will create:
+
+- `./schema-iso19139.gemini23-4.2.4-SNAPSHOT.jar`
+
+
 ## Manual verification
 
 1. Open `http://localhost:8080/geonetwork`.
@@ -39,3 +52,25 @@ Or if GeoNetwork is already running:
 ```bash
 GN_BASE_URL=http://127.0.0.1:8080 npx playwright test
 ```
+
+
+## Troubleshooting Elasticsearch connection errors
+
+If you see errors like `Could not connect to index 'gn-records' ... Connection refused`:
+
+1. Ensure Elasticsearch is healthy:
+
+   ```bash
+   docker compose ps
+   docker compose logs elasticsearch
+   ```
+
+2. Restart with a clean Elasticsearch volume if needed:
+
+   ```bash
+   docker compose down -v
+   docker compose up -d --build
+   ```
+
+This compose file configures GeoNetwork with `ES_HOST`, `ES_PORT`, `ES_PROTOCOL`, and `ES_URL`, and uses reduced JVM heap defaults (`512m`) to avoid common local-memory startup failures.
+

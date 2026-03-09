@@ -36,6 +36,10 @@ POM
 
 RUN mvn -B -DskipTests package
 
+FROM scratch AS plugin-jar-export
+
+COPY --from=plugin-builder /build/target/schema-iso19139.gemini23-4.2.4-SNAPSHOT.jar /schema-iso19139.gemini23-4.2.4-SNAPSHOT.jar
+
 FROM geonetwork:4.2
 
 USER root
