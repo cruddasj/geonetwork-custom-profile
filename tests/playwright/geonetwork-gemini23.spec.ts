@@ -2,7 +2,7 @@ import { expect, test } from '@playwright/test';
 
 const baseURL = process.env.GN_BASE_URL ?? 'http://127.0.0.1:8080';
 
-test('admin can see iso19139.gemini23 schema in Metadata & templates', async ({ page, request }) => {
+test('admin can see GEMINI 2.3 schema label in Metadata & templates', async ({ page, request }) => {
   const loginResponse = await request.post(`${baseURL}/geonetwork/srv/api/me/login`, {
     form: { username: 'admin', password: 'admin' }
   });
@@ -20,5 +20,5 @@ test('admin can see iso19139.gemini23 schema in Metadata & templates', async ({ 
     await metadataTemplatesLink.first().click();
   }
 
-  await expect(page.getByText('iso19139.gemini23', { exact: false })).toBeVisible({ timeout: 60_000 });
+  await expect(page.getByText('GEMINI 2.3', { exact: false })).toBeVisible({ timeout: 60_000 });
 });
