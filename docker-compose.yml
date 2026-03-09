@@ -1,6 +1,6 @@
 services:
   elasticsearch:
-    image: docker.elastic.co/elasticsearch/elasticsearch:7.17.18
+    image: elasticsearch:7.17.15
     environment:
       discovery.type: single-node
       xpack.security.enabled: "false"
@@ -12,11 +12,11 @@ services:
     volumes:
       - esdata:/usr/share/elasticsearch/data
     healthcheck:
-      test: ['CMD-SHELL', 'curl -fsS "http://localhost:9200/_cluster/health?wait_for_status=yellow&timeout=1s" || exit 1']
+      test: ['CMD-SHELL', 'curl -fsS "http://localhost:9200/_cluster/health?wait_for_status=yellow&timeout=50s" || exit 1']
       interval: 10s
       timeout: 5s
       retries: 30
-      start_period: 30s
+      start_period: 120s
 
   geonetwork:
     restart: unless-stopped
@@ -30,10 +30,10 @@ services:
     ports:
       - "8080:8080"
     environment:
+      WEBAPP_CONTEXT_PATH: /geonetwork
       ES_HOST: elasticsearch
       ES_PORT: 9200
       ES_PROTOCOL: http
-      ES_URL: http://elasticsearch:9200
       JAVA_OPTS: -Xms512m -Xmx1024m
     healthcheck:
       test: ["CMD-SHELL", "curl -fsS http://localhost:8080/geonetwork/srv/api/site || exit 1"]

@@ -79,5 +79,15 @@ If you see errors like `Could not connect to index 'gn-records' ... Connection r
    docker compose up -d
    ```
 
-This compose file configures GeoNetwork with `ES_HOST`, `ES_PORT`, `ES_PROTOCOL`, and `ES_URL`, and uses reduced JVM heap defaults (`512m`) to avoid common local-memory startup failures.
+
+4. If Elasticsearch keeps restarting or never becomes healthy, check host kernel limits (common on Linux):
+
+   ```bash
+   docker compose logs elasticsearch
+   sudo sysctl -w vm.max_map_count=262144
+   ```
+
+   Then restart: `docker compose down -v && docker compose up -d --build`.
+
+This compose file now follows the official GeoNetwork 4.2 Docker environment variables for Elasticsearch (`ES_HOST`, `ES_PORT`, `ES_PROTOCOL`) and uses reduced JVM heap defaults (`512m`) to avoid common local-memory startup failures.
 
