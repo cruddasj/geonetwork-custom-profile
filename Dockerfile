@@ -65,6 +65,9 @@ RUN set -eux; \
     cp -a /tmp/iso19139.gemini23 "$schema_target"; \
     cp /tmp/en-schema-iso19139.gemini23.json "$locale_target/en-schema-iso19139.gemini23.json"; \
     cp /tmp/schema-iso19139.gemini23-4.2.4-SNAPSHOT.jar "$lib_target/"; \
+    if [ -f "$lib_target/groovy-2.5.5.jar" ] && [ -f "$lib_target/groovy-all-2.4.21.jar" ]; then \
+      rm -f "$lib_target/groovy-all-2.4.21.jar"; \
+    fi; \
     chown -R jetty:jetty "$schema_target" "$locale_target/en-schema-iso19139.gemini23.json" "$lib_target/schema-iso19139.gemini23-4.2.4-SNAPSHOT.jar"
 
 USER jetty

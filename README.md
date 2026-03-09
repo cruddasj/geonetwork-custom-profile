@@ -72,5 +72,12 @@ If you see errors like `Could not connect to index 'gn-records' ... Connection r
    docker compose up -d --build
    ```
 
+3. If startup logs show repeated Jetty warnings similar to `oeja.AnnotationParser ... scanned from multiple locations` for Groovy classes, rebuild the image so the Dockerfile cleanup step can remove the legacy duplicate `groovy-all-2.4.21.jar` when both Groovy JARs are present:
+
+   ```bash
+   docker compose build --no-cache geonetwork
+   docker compose up -d
+   ```
+
 This compose file configures GeoNetwork with `ES_HOST`, `ES_PORT`, `ES_PROTOCOL`, and `ES_URL`, and uses reduced JVM heap defaults (`512m`) to avoid common local-memory startup failures.
 
