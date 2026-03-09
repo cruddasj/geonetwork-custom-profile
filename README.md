@@ -72,13 +72,13 @@ If you see errors like `Could not connect to index 'gn-records' ... Connection r
    docker compose up -d --build
    ```
 
-3. If startup logs show repeated Jetty warnings similar to `oeja.AnnotationParser ... scanned from multiple locations` for Groovy classes, rebuild the image so the Dockerfile cleanup step can remove the legacy duplicate `groovy-all-2.4.21.jar` when both Groovy JARs are present:
+3. If startup logs still show repeated Jetty warnings similar to `oeja.AnnotationParser ... scanned from multiple locations` (for example Groovy or BouncyCastle classes), set Jetty annotation-parser logging to `ERROR` (already configured in this compose file):
 
    ```bash
-   docker compose build --no-cache geonetwork
-   docker compose up -d
+   JAVA_OPTS="-Xms512m -Xmx1024m -Dorg.eclipse.jetty.annotations.AnnotationParser.LEVEL=ERROR" docker compose up -d --build
    ```
 
+   These warnings are typically non-fatal duplicate-class scan notices from upstream image libraries.
 
 4. If Elasticsearch keeps restarting or never becomes healthy, check host kernel limits (common on Linux):
 
