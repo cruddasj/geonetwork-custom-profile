@@ -29,9 +29,9 @@
   <id>c9054754-5692-4189-9ac2-e95cf404a470</id>
   <version>1.0</version>
   <appMinorVersionSupported>3.4.0</appMinorVersionSupported>
-  <title>GEMINI 2.3</title>
-  <description>GEMINI 2.3 metadata profile based on ISO 19139:2007</description>
-  <standardUrl>https://github.com/AstunTechnology/iso19139.gemini23</standardUrl>
+  <title xml:lang="en">GEMINI 2.3 &#45;&#45; Metadata</title>
+  <description xml:lang="en">GEMINI 2.3 metadata profile based on ISO 19139:2007</description>
+  <standardUrl xml:lang="en">https://agiorguk.github.io/gemini/1062-gemini-datasets-and-data-series.html</standardUrl>
   <depends>iso19139</depends>
   <!-- 19139:2007 version -->
   <schemaLocation>http://www.isotc211.org/2005/gmd http://schemas.opengis.net/csw/2.0.2/profiles/apiso/1.0.0/apiso.xsd</schemaLocation>
