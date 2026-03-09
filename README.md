@@ -89,5 +89,10 @@ If you see errors like `Could not connect to index 'gn-records' ... Connection r
 
    Then restart: `docker compose down -v && docker compose up -d --build`.
 
-This compose file now follows the official GeoNetwork 4.2 Docker environment variables for Elasticsearch (`ES_HOST`, `ES_PORT`, `ES_PROTOCOL`) and uses reduced JVM heap defaults (`512m`) to avoid common local-memory startup failures.
+This compose file sets both the GeoNetwork 4.2-style Elasticsearch variables (`ES_HOST`, `ES_PORT`, `ES_PROTOCOL`) and `GN_CONFIG_PROPERTIES` with explicit `es.*` Java properties so Elasticsearch connection settings are unambiguous. It also keeps reduced JVM heap defaults (`512m`) to avoid common local-memory startup failures.
 
+
+
+### Why both `ES_*` and `GN_CONFIG_PROPERTIES` are set
+
+GeoNetwork 4.2 commonly uses `ES_HOST`/`ES_PORT`/`ES_PROTOCOL`, while newer examples use `GN_CONFIG_PROPERTIES`. This stack now sets both so the container can resolve Elasticsearch settings consistently even if one mechanism is ignored in a specific image build.
