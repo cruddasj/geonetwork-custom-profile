@@ -45,7 +45,7 @@ services:
       GEONETWORK_ES_HOST: elasticsearch
       GEONETWORK_ES_PORT: 9200
       GEONETWORK_ES_PROTOCOL: http
-      JAVA_OPTS: -Xms512m -Xmx1024m -Dorg.eclipse.jetty.annotations.AnnotationParser.LEVEL=ERROR
+      JAVA_OPTS: -Xms512m -Xmx1024m -Dorg.eclipse.jetty.annotations.AnnotationParser.LEVEL=ERROR -Dorg.eclipse.jetty.annotations.LEVEL=ERROR
     healthcheck:
       test: ["CMD-SHELL", "curl -fsS http://localhost:8080/geonetwork/srv/api/site || exit 1"]
       interval: 20s
