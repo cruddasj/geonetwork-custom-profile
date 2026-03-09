@@ -89,10 +89,23 @@ If you see errors like `Could not connect to index 'gn-records' ... Connection r
 
    Then restart: `docker compose down -v && docker compose up -d --build`.
 
-This compose file sets both the GeoNetwork 4.2-style Elasticsearch variables (`ES_HOST`, `ES_PORT`, `ES_PROTOCOL`) and `GN_CONFIG_PROPERTIES` with explicit `es.*` Java properties so Elasticsearch connection settings are unambiguous. It also keeps reduced JVM heap defaults (`512m`) to avoid common local-memory startup failures.
+5. Validate connectivity from inside the GeoNetwork container:
+
+   ```bash
+   docker compose exec geonetwork sh -lc 'getent hosts elasticsearch && curl -fsS http://elasticsearch:9200'
+   ```
+
+   If this fails, the issue is container networking / Elasticsearch availability rather than the schema plugin.
+
+6. Note: The `ESAPI` warnings about missing `/var/lib/jetty/ESAPI.properties` and `validation.properties` are expected fallback lookups. GeoNetwork then loads ESAPI from the classpath; those lines are noisy but not the Elasticsearch root cause.
+
+This compose file follows the official GeoNetwork 4.2 image behavior and uses `ES_HOST`, `ES_PORT`, and `ES_PROTOCOL` (the variables consumed by the 4.2 entrypoint). It also keeps reduced JVM heap defaults (`512m`) to avoid common local-memory startup failures.
 
 
 
-### Why both `ES_*` and `GN_CONFIG_PROPERTIES` are set
+### GeoNetwork 4.2 vs 4.4+ Elasticsearch configuration
 
-GeoNetwork 4.2 commonly uses `ES_HOST`/`ES_PORT`/`ES_PROTOCOL`, while newer examples use `GN_CONFIG_PROPERTIES`. This stack now sets both so the container can resolve Elasticsearch settings consistently even if one mechanism is ignored in a specific image build.
+- GeoNetwork **4.2** images use `ES_HOST`, `ES_PORT`, `ES_PROTOCOL` (and optional `ES_INDEX_RECORDS`, `ES_USERNAME`, `ES_PASSWORD`) in the container entrypoint.
+- GeoNetwork **4.4+** examples often use `GN_CONFIG_PROPERTIES` with `-Des.*` Java properties.
+
+This repository targets `geonetwork:4.2`, so Compose is intentionally configured with `ES_*` variables.
