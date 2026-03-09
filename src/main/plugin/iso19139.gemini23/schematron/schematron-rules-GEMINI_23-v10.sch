@@ -1166,6 +1166,37 @@
         the network </sch:assert>
     </sch:rule>
   </sch:pattern>
+
+  <!-- ========================================================================================== -->
+  <!-- Custom mandatory fields for GEP DEFRA profile                                              -->
+  <!-- ========================================================================================== -->
+  <sch:pattern fpi="GEP-DEFRA-mandatory-fields">
+    <sch:title>GEP DEFRA mandatory fields</sch:title>
+    <sch:rule context="//gmd:MD_Metadata[1]">
+      <sch:assert test="count(gmd:identificationInfo[1]/*[1]/gmd:characterSet/gmd:MD_CharacterSetCode) &gt; 0">
+        G51 (Character Encoding): Character encoding is mandatory.
+      </sch:assert>
+      <sch:assert test="count(gmd:dataQualityInfo/gmd:DQ_DataQuality) &gt; 0">
+        G52 (Data Quality): Data quality is mandatory.
+      </sch:assert>
+      <sch:assert test="count(gmd:identificationInfo[1]/*[1]/gmd:extent/*[1]/gmd:geographicElement/gmd:EX_GeographicDescription/gmd:geographicIdentifier/*[1]/gmd:code |
+      gmd:identificationInfo[1]/*[1]/gmd:extent/*[1]/gmd:geographicElement/*[@gco:isoType='gmd:EX_GeographicDescription'][1]/gmd:geographicIdentifier/*[1]/gmd:code |
+      gmd:identificationInfo[1]/*[1]/srv:extent/*[1]/gmd:geographicElement/gmd:EX_GeographicDescription/gmd:geographicIdentifier/*[1]/gmd:code |
+      gmd:identificationInfo[1]/*[1]/srv:extent/*[1]/gmd:geographicElement/*[@gco:isoType='gmd:EX_GeographicDescription'][1]/gmd:geographicIdentifier/*[1]/gmd:code) &gt; 0">
+        G15 (Geographic Description): Geographic description is mandatory.
+      </sch:assert>
+      <sch:assert test="count(gmd:metadataStandardName/*[1][normalize-space(.) or @xlink:href]) &gt; 0">
+        G54 (Metadata Standard Name): Metadata standard name is mandatory.
+      </sch:assert>
+      <sch:assert test="count(gmd:distributionInfo/*[1]/gmd:transferOptions/*[1]/gmd:onLine/*[1]/gmd:linkage/*[1][normalize-space(.)]) &gt; 0">
+        G19 (Resource Locator): Resource locator is mandatory.
+      </sch:assert>
+      <sch:assert test="count(gmd:identificationInfo[1]/*[1]/gmd:spatialResolution/*[self::gmd:MD_Resolution]/gmd:distance |
+      gmd:identificationInfo[1]/*[1]/gmd:spatialResolution/*[self::gmd:MD_Resolution]/gmd:equivalentScale) &gt; 0">
+        G18 (Spatial Resolution): Spatial resolution is mandatory.
+      </sch:assert>
+    </sch:rule>
+  </sch:pattern>
   <!-- ========================================================================================== -->
   <!-- Ancillary Tests                                                                            -->
   <!-- ========================================================================================== -->
